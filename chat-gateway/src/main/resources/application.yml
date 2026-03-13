@@ -18,8 +18,8 @@ spring:
   # Redis 配置
   data:
     redis:
-      host: 127.0.0.1
-      port: 6379
+      host: 192.168.202.155
+      port: 61300
       timeout: 5000ms
       lettuce:
         pool:
@@ -48,6 +48,9 @@ mybatis-plus:
       logic-delete-field: deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
+  spring:
+    main:
+      allow-bean-definition-overriding: true
 
 # 服务器配置
 server:
