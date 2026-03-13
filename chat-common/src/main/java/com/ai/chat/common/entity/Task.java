@@ -1,8 +1,8 @@
-package com.chat.common.entity;
+package com.ai.chat.common.entity;
 
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.baomidou.mybatisplus.annotation.*;
-import com.chat.common.enums.TaskStatus;
+import com.ai.chat.common.enums.TaskStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;

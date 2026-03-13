@@ -1,6 +1,6 @@
-package com.chat.common.dto;
+package com.ai.chat.common.dto;
 
-import com.chat.common.entity.Task;
+import com.ai.chat.common.entity.Task;
 import lombok.Data;
 import lombok.Builder;
 import java.util.List;

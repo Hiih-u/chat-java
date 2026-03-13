@@ -1,4 +1,4 @@
-package com.chat.common.entity;
+package com.ai.chat.common.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;

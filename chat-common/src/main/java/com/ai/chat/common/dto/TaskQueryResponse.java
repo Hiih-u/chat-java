@@ -1,4 +1,4 @@
-package com.chat.common.dto;
+package com.ai.chat.common.dto;
 
 import lombok.Data;
 import java.time.LocalDateTime;

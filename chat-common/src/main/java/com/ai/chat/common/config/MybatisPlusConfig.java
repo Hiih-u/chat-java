@@ -1,4 +1,4 @@
-package com.chat.common.config;
+package com.ai.chat.common.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
