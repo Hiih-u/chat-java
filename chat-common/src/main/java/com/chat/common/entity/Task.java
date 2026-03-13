@@ -34,8 +34,8 @@ public class Task {
     private String errorMsg;
 
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 }

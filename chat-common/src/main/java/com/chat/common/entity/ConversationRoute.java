@@ -11,7 +11,6 @@ public class ConversationRoute {
     @TableId(type = IdType.INPUT)
     private String conversationId;
 
-    @TableId(type = IdType.INPUT)
     private Integer slotId;
 
     private String nodeUrl;
