@@ -9,6 +9,26 @@ spring:
     url: jdbc:postgresql://192.168.202.155:61020/gemini
     username: postgres
     password: Hi8899
+  # Redis 配置
+  data:
+    redis:
+      host: 192.168.202.155
+      port: 6379
+      password:
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+  # 缓存配置
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000  # 默认缓存过期时间 1小时（毫秒）
+      cache-null-values: false  # 不缓存空值
 
 mybatis-plus:
   configuration:

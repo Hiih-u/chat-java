@@ -4,6 +4,7 @@ import com.ai.chat.common.entity.Conversation;
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
 import com.ai.chat.common.mapper.ConversationMapper;
+import com.ai.chat.common.config.CacheConfig;
 import com.ai.chat.converter.ConversationConverter;
 import com.ai.chat.dto.request.ConversationCreateRequest;
 import com.ai.chat.dto.request.ConversationUpdateRequest;
@@ -13,6 +14,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -27,6 +31,10 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
+    })
     public ConversationResponse createConversation(ConversationCreateRequest request) {
         boolean exist = this.lambdaQuery()
                 .eq(Conversation::getConversationId, request.getConversationId())
@@ -44,6 +52,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     }
 
     @Override
+    @Cacheable(value = CacheConfig.CONVERSATION_CACHE, key = "#conversationId", unless = "#result == null")
     public ConversationResponse getByConversationId(String conversationId) {
         Conversation conversation = this.lambdaQuery()
                 .eq(Conversation::getConversationId, conversationId)
@@ -52,6 +61,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     }
 
     @Override
+    @Cacheable(value = CacheConfig.CONVERSATION_PAGE_CACHE, key = "#current + '-' + #size + '-' + (#keyword != null ? #keyword : 'all')")
     public Page<ConversationResponse> pageQuery(int current, int size, String keyword) {
         Page<Conversation> page = new Page<>(current, size);
         LambdaQueryWrapper<Conversation> wrapper = new LambdaQueryWrapper<>();
@@ -72,6 +82,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     }
 
     @Override
+    @Cacheable(value = CacheConfig.CONVERSATION_CACHE, key = "#conversationIdOrId", unless = "#result == null")
     public ConversationResponse getDetails(String conversationIdOrId) {
         Conversation conversation = this.lambdaQuery()
                 .eq(Conversation::getConversationId, conversationIdOrId)
@@ -87,6 +98,11 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE, key = "#id"),
+            @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
+    })
     public ConversationResponse updateConversation(Long id, ConversationUpdateRequest request) {
         Conversation conversation = this.getById(id);
         if (conversation == null) {
@@ -109,6 +125,11 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
+    })
     public void deleteConversation(Long id) {
         Conversation conversation = this.getById(id);
         if (conversation == null) {
@@ -123,6 +144,11 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Transactional(rollbackFor = Exception.class)
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
+            @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
+    })
     public void batchDeleteConversation(Collection<Long> ids) {
         if (ids == null || ids.isEmpty()) {
             throw new BusinessException(ResultCode.BAD_REQUEST, "批量删除 id 列表不能为空");
@@ -135,6 +161,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     }
 
     @Override
+    @Cacheable(value = CacheConfig.CONVERSATION_LIST_CACHE, key = "'all'")
     public List<ConversationResponse> listAll() {
         List<Conversation> list = this.list();
         return ConversationConverter.toResponseList(list);

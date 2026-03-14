@@ -1,6 +1,6 @@
 package com.ai.chat.controller;
 
-import com.ai.chat.common.Result;
+import com.ai.chat.common.entity.Result;
 import com.ai.chat.dto.request.ConversationCreateRequest;
 import com.ai.chat.dto.request.ConversationUpdateRequest;
 import com.ai.chat.dto.response.ConversationResponse;

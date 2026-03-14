@@ -1,4 +1,4 @@
-package com.ai.chat.common;
+package com.ai.chat.common.entity;
 
 import com.ai.chat.common.enums.ResultCode;
 import lombok.Data;
