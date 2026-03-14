@@ -28,6 +28,7 @@
         <module>chat-common</module>
         <module>chat-gateway</module>
         <module>chat-worker</module>
+        <module>chat-system</module>
     </modules>
 
     <dependencyManagement>
