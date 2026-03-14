@@ -24,4 +24,7 @@ public class Conversation {
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
+
+    @TableLogic  // 逻辑删除注解
+    private Integer deleted;  // 0-未删除，1-已删除
 }
