@@ -8,8 +8,4 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface ConversationMapper extends BaseMapper<Conversation> {
-
-    // 根据 conversationId 查询会话信息
-    @Select("SELECT * FROM ai_conversations WHERE conversation_id = #{conversationId} LIMIT 1")
-    Conversation selectByConversationId(@Param("conversationId") String conversationId);
 }

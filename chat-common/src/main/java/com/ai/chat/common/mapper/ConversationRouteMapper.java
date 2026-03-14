@@ -13,10 +13,4 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface ConversationRouteMapper extends BaseMapper<ConversationRoute> {
-
-    /**
-     * 根据 conversationId 查询路由信息
-     */
-    @Select("SELECT * FROM conversation_routes WHERE conversation_id = #{conversationId} LIMIT 1")
-    ConversationRoute selectByConversationId(@Param("conversationId") String conversationId);
 }
