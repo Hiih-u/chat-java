@@ -82,14 +82,11 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     }
 
     @Override
-    @Cacheable(value = CacheConfig.CONVERSATION_CACHE, key = "#conversationIdOrId", unless = "#result == null")
-    public ConversationResponse getDetails(String conversationIdOrId) {
+    @Cacheable(value = CacheConfig.CONVERSATION_CACHE, key = "#conversationId", unless = "#result == null")
+    public ConversationResponse getDetails(String conversationId) {
         Conversation conversation = this.lambdaQuery()
-                .eq(Conversation::getConversationId, conversationIdOrId)
+                .eq(Conversation::getConversationId, conversationId)
                 .one();
-        if (conversation == null && conversationIdOrId != null && conversationIdOrId.matches("\\d+")) {
-            conversation = this.getById(Long.parseLong(conversationIdOrId));
-        }
         if (conversation == null) {
             throw new BusinessException(ResultCode.NOT_FOUND, "会话不存在");
         }
@@ -99,7 +96,9 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     @Override
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
-            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE, key = "#id"),
+            // 精确清除：清除被更新会话的缓存（按 conversationId）
+            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE, key = "#result.conversationId", condition = "#result != null"),
+            // 清除列表和分页缓存
             @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
     })

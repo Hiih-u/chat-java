@@ -19,7 +19,7 @@ public interface IConversationService extends IService<Conversation> {
 
     Page<ConversationResponse> pageQuery(int current, int size, String keyword);
 
-    ConversationResponse getDetails(String conversationIdOrId);
+    ConversationResponse getDetails(String conversationId);
 
     ConversationResponse updateConversation(Long id, ConversationUpdateRequest request);
 
