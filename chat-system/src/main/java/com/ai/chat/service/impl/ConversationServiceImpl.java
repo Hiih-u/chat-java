@@ -96,8 +96,10 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     @Override
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
-            // 精确清除：清除被更新会话的缓存（按 conversationId）
-            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE, key = "#result.conversationId", condition = "#result != null"),
+            // 精准删除：方法执行成功后，根据返回值的 conversationId 清除缓存
+            @CacheEvict(value = CacheConfig.CONVERSATION_CACHE,
+                        key = "#result.conversationId",
+                        beforeInvocation = false),
             // 清除列表和分页缓存
             @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
