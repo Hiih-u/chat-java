@@ -61,24 +61,26 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     }
 
     @Override
-    @Cacheable(value = CacheConfig.CONVERSATION_PAGE_CACHE, key = "#current + '-' + #size + '-' + (#keyword != null ? #keyword : 'all')")
-    public Page<ConversationResponse> pageQuery(int current, int size, String keyword) {
-        Page<Conversation> page = new Page<>(current, size);
+    @Cacheable(value = CacheConfig.CONVERSATION_PAGE_CACHE, 
+            key = "#current + '-' + #size + '-' + (#keyword != null ? #keyword : 'all')")
+    public IPage<ConversationResponse> pageQuery(int current, int size, String keyword) {
+        // 1. 创建分页对象
+        IPage<Conversation> page = new Page<>(current, size);
+        
+        // 2. 构建查询条件
         LambdaQueryWrapper<Conversation> wrapper = new LambdaQueryWrapper<>();
-
         if (StringUtils.hasText(keyword)) {
             wrapper.and(w -> w.like(Conversation::getTitle, keyword)
                     .or()
                     .like(Conversation::getConversationId, keyword));
         }
-
         wrapper.orderByDesc(Conversation::getCreatedAt);
-        Page<Conversation> entityPage = this.page(page, wrapper);
-
-        // 转换为 DTO Page
-        Page<ConversationResponse> responsePage = new Page<>(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
-        responsePage.setRecords(ConversationConverter.toResponseList(entityPage.getRecords()));
-        return responsePage;
+        
+        // 3. 执行分页查询
+        IPage<Conversation> entityPage = this.page(page, wrapper);
+        
+        // 4. 使用 convert() 方法转换（一行代码搞定！）
+        return entityPage.convert(ConversationConverter::toResponse);
     }
 
     @Override

@@ -63,11 +63,11 @@ public class ConversationController {
      * @return 分页结果
      */
     @GetMapping("/page")
-    public Result<Page<ConversationResponse>> page(
+    public Result<IPage<ConversationResponse>> page(
             @RequestParam(defaultValue = "1") @Min(value = 1, message = "页码必须大于0") int current,
             @RequestParam(defaultValue = "10") @Min(value = 1, message = "每页数量必须大于0") int size,
             @RequestParam(required = false) String keyword) {
-        Page<ConversationResponse> page = conversationService.pageQuery(current, size, keyword);
+        IPage<ConversationResponse> page = conversationService.pageQuery(current, size, keyword);
         return Result.success(page);
     }
 

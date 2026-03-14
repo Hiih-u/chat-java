@@ -17,7 +17,7 @@ public interface IConversationService extends IService<Conversation> {
 
     ConversationResponse getByConversationId(String conversationId);
 
-    Page<ConversationResponse> pageQuery(int current, int size, String keyword);
+    IPage<ConversationResponse> pageQuery(int current, int size, String keyword);
 
     ConversationResponse getDetails(String conversationId);
 
