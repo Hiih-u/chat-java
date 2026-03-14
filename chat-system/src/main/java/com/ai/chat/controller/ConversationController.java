@@ -27,27 +27,13 @@ public class ConversationController {
     // 创建会话
     @PostMapping("/create")
     public Result<Conversation> create(@Validated @RequestBody ConversationCreateRequest request) {
-        Conversation conversation = new Conversation();
-        BeanUtils.copyProperties(request, conversation);
-        conversationService.save(conversation);
-        return Result.success(conversation);
+        return Result.success(conversationService.createConversation(request));
     }
 
     // 根据 conversationId 获取会话
     @GetMapping("/{conversationId}")
     public Result<Conversation> getByConversationId(@PathVariable String conversationId) {
-        // 先尝试按 conversationId 查询
-        Conversation conversation = conversationService.getByConversationId(conversationId);
-
-        // 如果查不到且是数字，尝试按 id 查询
-        if (conversation == null && conversationId.matches("\\d+")) {
-            conversation = conversationService.getById(Long.parseLong(conversationId));
-        }
-
-        if (conversation == null){
-            return Result.error("会话不存在");
-        }
-        return Result.success(conversation);
+        return Result.success(conversationService.getDetails(conversationId));
     }
 
     // 分页查询
@@ -72,41 +58,22 @@ public class ConversationController {
     public Result<Conversation> update(
             @PathVariable Long id,
             @RequestBody ConversationUpdateRequest request) {
-        Conversation conversation = conversationService.getById(id);
-        if (conversation == null) {
-            return Result.error("会话不存在");
-        }
-
-        if (request.getTitle() != null) {
-            conversation.setTitle(request.getTitle());
-        }
-//        if (request.getSessionMetadata() != null) {
-//            conversation.setSessionMetadata(request.getSessionMetadata());
-//        }
-
-        conversationService.updateById(conversation);
-        return Result.success(conversation);
+        return Result.success(conversationService.updateConversation(id, request));
     }
 
     // 删除会话
     @DeleteMapping("/{id}")
     public Result<Void> delete(@PathVariable Long id){
-        boolean success = conversationService.removeById(id);
-        if (!success) {
-            return Result.error("删除失败");
-        }
-        return Result.success(null);
+        conversationService.deleteConversation(id);
+        return Result.success();
     }
 
 
     // 批量删除
     @DeleteMapping("/batch")
     public Result<Void> batchDelete(@RequestBody List<Long> ids) {
-        boolean success = conversationService.removeByIds(ids);
-        if (!success) {
-            return Result.error("批量删除失败");
-        }
-        return Result.success(null);
+        conversationService.batchDeleteConversation(ids);
+        return Result.success();
     }
 
 }

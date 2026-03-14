@@ -25,11 +25,12 @@ public class MybatisPlusConfig {
     // 自动填充
     @Bean
     public MetaObjectHandler metaObjectHandler() {
-        return new MetaObjectHandler(){
+        return new MetaObjectHandler() {
             @Override
             public void insertFill(MetaObject metaObject) {
                 this.strictInsertFill(metaObject, "createdAt", LocalDateTime.class, LocalDateTime.now());
                 this.strictInsertFill(metaObject, "updatedAt", LocalDateTime.class, LocalDateTime.now());
+                this.strictInsertFill(metaObject, "deleted", Integer.class, 0);
             }
 
             @Override

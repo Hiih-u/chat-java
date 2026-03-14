@@ -1,5 +1,6 @@
 package com.ai.chat.common;
 
+import com.ai.chat.common.enums.ResultCode;
 import lombok.Data;
 
 @Data
@@ -10,18 +11,38 @@ public class Result<T> {
     private T data;
 
     public static <T> Result<T> success(T data) {
-        Result<T> result = new Result<>();
-        result.setCode(200);
-        result.setMessage("success");
-        result.setData(data);
-        return result;
+        return build(ResultCode.SUCCESS, data);
+    }
+
+    public static <T> Result<T> success() {
+        return build(ResultCode.SUCCESS, null);
     }
 
     public static <T> Result<T> error(String message) {
-        Result<T> result = new Result<>();
-        result.setCode(500);
-        result.setMessage(message);
-        return result;
+        return build(ResultCode.INTERNAL_ERROR.getCode(), message, null);
     }
 
+    public static <T> Result<T> error(ResultCode resultCode) {
+        return build(resultCode, null);
+    }
+
+    public static <T> Result<T> error(ResultCode resultCode, String message) {
+        return build(resultCode.getCode(), message, null);
+    }
+
+    public static <T> Result<T> error(int code, String message) {
+        return build(code, message, null);
+    }
+
+    public static <T> Result<T> build(ResultCode resultCode, T data) {
+        return build(resultCode.getCode(), resultCode.getMessage(), data);
+    }
+
+    public static <T> Result<T> build(int code, String message, T data) {
+        Result<T> result = new Result<>();
+        result.setCode(code);
+        result.setMessage(message);
+        result.setData(data);
+        return result;
+    }
 }

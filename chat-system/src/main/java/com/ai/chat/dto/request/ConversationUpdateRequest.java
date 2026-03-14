@@ -8,5 +8,5 @@ import java.util.Map;
 public class ConversationUpdateRequest {
 
     private String title;
-//    private Map<String,Object> sessionMetadata;
+    private Map<String,Object> sessionMetadata;
 }
