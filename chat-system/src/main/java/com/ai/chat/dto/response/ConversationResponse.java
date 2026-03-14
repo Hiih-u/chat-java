@@ -7,10 +7,10 @@ import java.util.Map;
 @Data
 public class ConversationResponse {
 
-    private Integer Id;
+    private Long id;
     private String conversationId;
     private String title;
-    private Map<String,Object> sessionMetadata;
-    private LocalDateTime  createdAt;
+    private Map<String, Object> sessionMetadata;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

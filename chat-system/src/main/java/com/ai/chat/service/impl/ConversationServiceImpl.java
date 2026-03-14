@@ -4,19 +4,21 @@ import com.ai.chat.common.entity.Conversation;
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
 import com.ai.chat.common.mapper.ConversationMapper;
+import com.ai.chat.converter.ConversationConverter;
 import com.ai.chat.dto.request.ConversationCreateRequest;
 import com.ai.chat.dto.request.ConversationUpdateRequest;
+import com.ai.chat.dto.response.ConversationResponse;
 import com.ai.chat.service.IConversationService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Conversation>
@@ -25,7 +27,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Conversation createConversation(ConversationCreateRequest request) {
+    public ConversationResponse createConversation(ConversationCreateRequest request) {
         boolean exist = this.lambdaQuery()
                 .eq(Conversation::getConversationId, request.getConversationId())
                 .exists();
@@ -33,70 +35,76 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
             throw new BusinessException(ResultCode.BAD_REQUEST, "conversationId 已存在");
         }
 
-        Conversation conversation = new Conversation();
-        BeanUtils.copyProperties(request, conversation);
+        Conversation conversation = ConversationConverter.toEntity(request);
         boolean saved = this.save(conversation);
         if (!saved) {
             throw new BusinessException(ResultCode.INTERNAL_ERROR, "创建会话失败");
         }
-        return conversation;
-
-
+        return ConversationConverter.toResponse(conversation);
     }
 
     @Override
-    public Conversation getByConversationId(String conversationId) {
-        return this.lambdaQuery()
+    public ConversationResponse getByConversationId(String conversationId) {
+        Conversation conversation = this.lambdaQuery()
                 .eq(Conversation::getConversationId, conversationId)
                 .one();
+        return ConversationConverter.toResponse(conversation);
     }
 
     @Override
-    public Page<Conversation> pageQuery(int current, int size, String keyword) {
+    public Page<ConversationResponse> pageQuery(int current, int size, String keyword) {
         Page<Conversation> page = new Page<>(current, size);
         LambdaQueryWrapper<Conversation> wrapper = new LambdaQueryWrapper<>();
 
-        if (StringUtils.hasText(keyword)){
+        if (StringUtils.hasText(keyword)) {
             wrapper.and(w -> w.like(Conversation::getTitle, keyword)
                     .or()
                     .like(Conversation::getConversationId, keyword));
         }
 
         wrapper.orderByDesc(Conversation::getCreatedAt);
-        return this.page(page, wrapper);
+        Page<Conversation> entityPage = this.page(page, wrapper);
+
+        // 转换为 DTO Page
+        Page<ConversationResponse> responsePage = new Page<>(entityPage.getCurrent(), entityPage.getSize(), entityPage.getTotal());
+        responsePage.setRecords(ConversationConverter.toResponseList(entityPage.getRecords()));
+        return responsePage;
     }
 
     @Override
-    public Conversation getDetails(String conversationIdOrId) {
-        Conversation conversation = this.getByConversationId(conversationIdOrId);
+    public ConversationResponse getDetails(String conversationIdOrId) {
+        Conversation conversation = this.lambdaQuery()
+                .eq(Conversation::getConversationId, conversationIdOrId)
+                .one();
         if (conversation == null && conversationIdOrId != null && conversationIdOrId.matches("\\d+")) {
             conversation = this.getById(Long.parseLong(conversationIdOrId));
         }
         if (conversation == null) {
             throw new BusinessException(ResultCode.NOT_FOUND, "会话不存在");
         }
-        return conversation;
+        return ConversationConverter.toResponse(conversation);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Conversation updateConversation(Long id, ConversationUpdateRequest request) {
+    public ConversationResponse updateConversation(Long id, ConversationUpdateRequest request) {
         Conversation conversation = this.getById(id);
-        if (conversation == null ) {
+        if (conversation == null) {
             throw new BusinessException(ResultCode.NOT_FOUND, "会话不存在");
         }
 
         if (StringUtils.hasText(request.getTitle())) {
             conversation.setTitle(request.getTitle());
         }
+        if (request.getSessionMetadata() != null) {
+            conversation.setSessionMetadata(request.getSessionMetadata());
+        }
 
         boolean updated = this.updateById(conversation);
-        if (request.getSessionMetadata() != null) {
-            if (!updated) {
-                throw new BusinessException(ResultCode.INTERNAL_ERROR, "更新会话失败");
-            }
+        if (!updated) {
+            throw new BusinessException(ResultCode.INTERNAL_ERROR, "更新会话失败");
         }
-        return conversation;
+        return ConversationConverter.toResponse(conversation);
     }
 
     @Override
@@ -126,5 +134,10 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
         }
     }
 
+    @Override
+    public List<ConversationResponse> listAll() {
+        List<Conversation> list = this.list();
+        return ConversationConverter.toResponseList(list);
+    }
 
 }

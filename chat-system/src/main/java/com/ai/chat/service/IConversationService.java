@@ -3,27 +3,30 @@ package com.ai.chat.service;
 import com.ai.chat.common.entity.Conversation;
 import com.ai.chat.dto.request.ConversationCreateRequest;
 import com.ai.chat.dto.request.ConversationUpdateRequest;
+import com.ai.chat.dto.response.ConversationResponse;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 
 public interface IConversationService extends IService<Conversation> {
 
-    Conversation createConversation(ConversationCreateRequest request);
+    ConversationResponse createConversation(ConversationCreateRequest request);
 
-    Conversation getByConversationId(String conversationId);
+    ConversationResponse getByConversationId(String conversationId);
 
-    Page<Conversation> pageQuery(int current, int size, String keyword);
+    Page<ConversationResponse> pageQuery(int current, int size, String keyword);
 
-    Conversation getDetails(String conversationIdOrId);
+    ConversationResponse getDetails(String conversationIdOrId);
 
-    Conversation updateConversation(Long id, ConversationUpdateRequest request);
+    ConversationResponse updateConversation(Long id, ConversationUpdateRequest request);
 
     void deleteConversation(Long id);
 
     void batchDeleteConversation(Collection<Long> ids);
+
+    List<ConversationResponse> listAll();
 
 }
