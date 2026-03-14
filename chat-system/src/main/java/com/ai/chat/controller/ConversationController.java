@@ -5,6 +5,7 @@ import com.ai.chat.dto.request.ConversationCreateRequest;
 import com.ai.chat.dto.request.ConversationUpdateRequest;
 import com.ai.chat.dto.response.ConversationResponse;
 import com.ai.chat.service.IConversationService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
