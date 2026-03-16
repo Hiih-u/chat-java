@@ -1,4 +1,4 @@
-package com.ai.chat.common.entity;
+package com.ai.chat.common.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
@@ -25,7 +25,7 @@ public class Conversation {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 
-    @TableLogic  // 逻辑删除注解
+    @TableLogic
     @TableField(fill = FieldFill.INSERT)
-    private Integer deleted;  // 0-未删除，1-已删除
+    private Integer deleted;
 }

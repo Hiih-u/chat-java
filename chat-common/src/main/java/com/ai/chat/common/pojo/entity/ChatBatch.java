@@ -1,4 +1,4 @@
-package com.ai.chat.common.entity;
+package com.ai.chat.common.pojo.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
@@ -21,7 +21,6 @@ public class ChatBatch {
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    // 一对多关系（查询时需要手动关联）
     @TableField(exist = false)
     private List<Task> tasks;
 }

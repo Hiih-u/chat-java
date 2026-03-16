@@ -1,4 +1,4 @@
-package com.ai.chat.dto.request;
+package com.ai.chat.common.pojo.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -6,11 +6,11 @@ import lombok.Data;
 import java.util.Map;
 
 @Data
-public class ConversationCreateRequest {
+public class ConversationDTO {
 
     @NotBlank(message = "conversationId 不能为空")
     private String conversationId;
 
     private String title;
-    private Map<String,Object> sessionMetadata;
+    private Map<String, Object> sessionMetadata;
 }

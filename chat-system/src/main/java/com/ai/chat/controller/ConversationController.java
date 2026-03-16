@@ -1,12 +1,11 @@
 package com.ai.chat.controller;
 
-import com.ai.chat.common.entity.Result;
-import com.ai.chat.dto.request.ConversationCreateRequest;
-import com.ai.chat.dto.request.ConversationUpdateRequest;
-import com.ai.chat.dto.response.ConversationResponse;
+import com.ai.chat.common.pojo.entity.Result;
+import com.ai.chat.common.pojo.dto.ConversationDTO;
+import com.ai.chat.common.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.common.pojo.vo.ConversationVo;
 import com.ai.chat.service.IConversationService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
@@ -33,13 +32,13 @@ public class ConversationController {
     /**
      * 创建会话
      *
-     * @param request 会话创建请求
+     * @param dto 会话创建DTO
      * @return 创建的会话信息
      */
     @PostMapping("/create")
-    public Result<ConversationResponse> create(@Validated @RequestBody ConversationCreateRequest request) {
-        log.info("创建会话: conversationId={}", request.getConversationId());
-        ConversationResponse response = conversationService.createConversation(request);
+    public Result<ConversationVo> create(@Validated @RequestBody ConversationDTO dto) {
+        log.info("创建会话: conversationId={}", dto.getConversationId());
+        ConversationVo response = conversationService.createConversation(dto);
         log.info("会话创建成功: id={}", response.getId());
         return Result.success(response);
     }
@@ -51,7 +50,7 @@ public class ConversationController {
      * @return 会话详情
      */
     @GetMapping("/{conversationId}")
-    public Result<ConversationResponse> getByConversationId(@PathVariable String conversationId) {
+    public Result<ConversationVo> getByConversationId(@PathVariable String conversationId) {
         return Result.success(conversationService.getDetails(conversationId));
     }
 
@@ -64,11 +63,11 @@ public class ConversationController {
      * @return 分页结果
      */
     @GetMapping("/page")
-    public Result<IPage<ConversationResponse>> page(
+    public Result<IPage<ConversationVo>> page(
             @RequestParam(defaultValue = "1") @Min(value = 1, message = "页码必须大于0") int current,
             @RequestParam(defaultValue = "10") @Min(value = 1, message = "每页数量必须大于0") int size,
             @RequestParam(required = false) String keyword) {
-        IPage<ConversationResponse> page = conversationService.pageQuery(current, size, keyword);
+        IPage<ConversationVo> page = conversationService.pageQuery(current, size, keyword);
         return Result.success(page);
     }
 
@@ -78,8 +77,8 @@ public class ConversationController {
      * @return 会话列表
      */
     @GetMapping("/list")
-    public Result<List<ConversationResponse>> list() {
-        List<ConversationResponse> list = conversationService.listAll();
+    public Result<List<ConversationVo>> list() {
+        List<ConversationVo> list = conversationService.listAll();
         return Result.success(list);
     }
 
@@ -87,15 +86,15 @@ public class ConversationController {
      * 更新会话
      *
      * @param id 会话数据库主键ID
-     * @param request 更新请求
+     * @param dto 更新DTO
      * @return 更新后的会话信息
      */
     @PutMapping("/{id}")
-    public Result<ConversationResponse> update(
+    public Result<ConversationVo> update(
             @PathVariable @Min(value = 1, message = "ID必须大于0") Long id,
-            @Validated @RequestBody ConversationUpdateRequest request) {
+            @Validated @RequestBody ConversationUpdateDTO dto) {
         log.info("更新会话: id={}", id);
-        ConversationResponse response = conversationService.updateConversation(id, request);
+        ConversationVo response = conversationService.updateConversation(id, dto);
         log.info("会话更新成功: id={}", id);
         return Result.success(response);
     }

@@ -1,11 +1,11 @@
-package com.ai.chat.dto.response;
+package com.ai.chat.common.pojo.vo;
 
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
-public class ConversationResponse {
+public class ConversationVo {
 
     private Long id;
     private String conversationId;

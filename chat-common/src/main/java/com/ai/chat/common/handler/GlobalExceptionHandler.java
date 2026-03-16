@@ -1,6 +1,6 @@
 package com.ai.chat.common.handler;
 
-import com.ai.chat.common.entity.Result;
+import com.ai.chat.common.pojo.entity.Result;
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;

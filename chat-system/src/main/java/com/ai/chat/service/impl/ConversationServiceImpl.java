@@ -1,14 +1,14 @@
 package com.ai.chat.service.impl;
 
-import com.ai.chat.common.entity.Conversation;
+import com.ai.chat.common.pojo.entity.Conversation;
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
 import com.ai.chat.common.mapper.ConversationMapper;
 import com.ai.chat.common.config.CacheConfig;
 import com.ai.chat.converter.ConversationConverter;
-import com.ai.chat.dto.request.ConversationCreateRequest;
-import com.ai.chat.dto.request.ConversationUpdateRequest;
-import com.ai.chat.dto.response.ConversationResponse;
+import com.ai.chat.common.pojo.dto.ConversationDTO;
+import com.ai.chat.common.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.common.pojo.vo.ConversationVo;
 import com.ai.chat.service.IConversationService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -36,15 +36,15 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
             @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
     })
-    public ConversationResponse createConversation(ConversationCreateRequest request) {
+    public ConversationVo createConversation(ConversationDTO dto) {
         boolean exist = this.lambdaQuery()
-                .eq(Conversation::getConversationId, request.getConversationId())
+                .eq(Conversation::getConversationId, dto.getConversationId())
                 .exists();
         if (exist) {
             throw new BusinessException(ResultCode.BAD_REQUEST, "conversationId 已存在");
         }
 
-        Conversation conversation = ConversationConverter.toEntity(request);
+        Conversation conversation = ConversationConverter.toEntity(dto);
         boolean saved = this.save(conversation);
         if (!saved) {
             throw new BusinessException(ResultCode.INTERNAL_ERROR, "创建会话失败");
@@ -54,7 +54,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Cacheable(value = CacheConfig.CONVERSATION_CACHE, key = "#conversationId", unless = "#result == null")
-    public ConversationResponse getByConversationId(String conversationId) {
+    public ConversationVo getByConversationId(String conversationId) {
         Conversation conversation = this.lambdaQuery()
                 .eq(Conversation::getConversationId, conversationId)
                 .one();
@@ -64,7 +64,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     @Override
     @Cacheable(value = CacheConfig.CONVERSATION_PAGE_CACHE, 
             key = "#current + '-' + #size + '-' + (#keyword != null ? #keyword : 'all')")
-    public IPage<ConversationResponse> pageQuery(int current, int size, String keyword) {
+    public IPage<ConversationVo> pageQuery(int current, int size, String keyword) {
         // 1. 创建分页对象
         IPage<Conversation> page = new Page<>(current, size);
         
@@ -86,7 +86,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Cacheable(value = CacheConfig.CONVERSATION_CACHE, key = "#conversationId", unless = "#result == null")
-    public ConversationResponse getDetails(String conversationId) {
+    public ConversationVo getDetails(String conversationId) {
         Conversation conversation = this.lambdaQuery()
                 .eq(Conversation::getConversationId, conversationId)
                 .one();
@@ -107,17 +107,17 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
             @CacheEvict(value = CacheConfig.CONVERSATION_LIST_CACHE, allEntries = true),
             @CacheEvict(value = CacheConfig.CONVERSATION_PAGE_CACHE, allEntries = true)
     })
-    public ConversationResponse updateConversation(Long id, ConversationUpdateRequest request) {
+    public ConversationVo updateConversation(Long id, ConversationUpdateDTO dto) {
         Conversation conversation = this.getById(id);
         if (conversation == null) {
             throw new BusinessException(ResultCode.NOT_FOUND, "会话不存在");
         }
 
-        if (StringUtils.hasText(request.getTitle())) {
-            conversation.setTitle(request.getTitle());
+        if (StringUtils.hasText(dto.getTitle())) {
+            conversation.setTitle(dto.getTitle());
         }
-        if (request.getSessionMetadata() != null) {
-            conversation.setSessionMetadata(request.getSessionMetadata());
+        if (dto.getSessionMetadata() != null) {
+            conversation.setSessionMetadata(dto.getSessionMetadata());
         }
 
         boolean updated = this.updateById(conversation);
@@ -166,7 +166,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
 
     @Override
     @Cacheable(value = CacheConfig.CONVERSATION_LIST_CACHE, key = "'all'")
-    public List<ConversationResponse> listAll() {
+    public List<ConversationVo> listAll() {
         List<Conversation> list = this.list();
         return ConversationConverter.toResponseList(list);
     }

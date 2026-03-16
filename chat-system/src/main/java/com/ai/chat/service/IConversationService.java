@@ -1,11 +1,10 @@
 package com.ai.chat.service;
 
-import com.ai.chat.common.entity.Conversation;
-import com.ai.chat.dto.request.ConversationCreateRequest;
-import com.ai.chat.dto.request.ConversationUpdateRequest;
-import com.ai.chat.dto.response.ConversationResponse;
+import com.ai.chat.common.pojo.entity.Conversation;
+import com.ai.chat.common.pojo.dto.ConversationDTO;
+import com.ai.chat.common.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.common.pojo.vo.ConversationVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Collection;
@@ -14,20 +13,20 @@ import java.util.List;
 
 public interface IConversationService extends IService<Conversation> {
 
-    ConversationResponse createConversation(ConversationCreateRequest request);
+    ConversationVo createConversation(ConversationDTO dto);
 
-    ConversationResponse getByConversationId(String conversationId);
+    ConversationVo getByConversationId(String conversationId);
 
-    IPage<ConversationResponse> pageQuery(int current, int size, String keyword);
+    IPage<ConversationVo> pageQuery(int current, int size, String keyword);
 
-    ConversationResponse getDetails(String conversationId);
+    ConversationVo getDetails(String conversationId);
 
-    ConversationResponse updateConversation(Long id, ConversationUpdateRequest request);
+    ConversationVo updateConversation(Long id, ConversationUpdateDTO dto);
 
     void deleteConversation(Long id);
 
     void batchDeleteConversation(Collection<Long> ids);
 
-    List<ConversationResponse> listAll();
+    List<ConversationVo> listAll();
 
 }

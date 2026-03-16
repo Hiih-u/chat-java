@@ -1,8 +1,8 @@
 package com.ai.chat.converter;
 
-import com.ai.chat.common.entity.Conversation;
-import com.ai.chat.dto.request.ConversationCreateRequest;
-import com.ai.chat.dto.response.ConversationResponse;
+import com.ai.chat.common.pojo.entity.Conversation;
+import com.ai.chat.common.pojo.dto.ConversationDTO;
+import com.ai.chat.common.pojo.vo.ConversationVo;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;
@@ -16,11 +16,11 @@ public class ConversationConverter {
     /**
      * Entity 转 Response DTO
      */
-    public static ConversationResponse toResponse(Conversation entity) {
+    public static ConversationVo toResponse(Conversation entity) {
         if (entity == null) {
             return null;
         }
-        ConversationResponse response = new ConversationResponse();
+        ConversationVo response = new ConversationVo();
         BeanUtils.copyProperties(entity, response);
         return response;
     }
@@ -28,7 +28,7 @@ public class ConversationConverter {
     /**
      * Entity 列表转 Response DTO 列表
      */
-    public static List<ConversationResponse> toResponseList(List<Conversation> entities) {
+    public static List<ConversationVo> toResponseList(List<Conversation> entities) {
         if (entities == null) {
             return null;
         }
@@ -38,14 +38,14 @@ public class ConversationConverter {
     }
 
     /**
-     * CreateRequest 转 Entity
+     * ConversationDTO 转 Entity
      */
-    public static Conversation toEntity(ConversationCreateRequest request) {
-        if (request == null) {
+    public static Conversation toEntity(ConversationDTO dto) {
+        if (dto == null) {
             return null;
         }
         Conversation entity = new Conversation();
-        BeanUtils.copyProperties(request, entity);
+        BeanUtils.copyProperties(dto, entity);
         return entity;
     }
 }
