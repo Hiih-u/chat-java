@@ -1,4 +1,4 @@
-package com.ai.chat.common.pojo.vo;
+package com.ai.chat.pojo.vo;
 
 import lombok.Data;
 import java.time.LocalDateTime;

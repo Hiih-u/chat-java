@@ -1,9 +1,9 @@
 package com.ai.chat.controller;
 
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.common.pojo.dto.ConversationDTO;
-import com.ai.chat.common.pojo.dto.ConversationUpdateDTO;
-import com.ai.chat.common.pojo.vo.ConversationVo;
+import com.ai.chat.pojo.dto.ConversationDTO;
+import com.ai.chat.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.pojo.vo.ConversationVo;
 import com.ai.chat.service.IConversationService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import jakarta.validation.constraints.Min;

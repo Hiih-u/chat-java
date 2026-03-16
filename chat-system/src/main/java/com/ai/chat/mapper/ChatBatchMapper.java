@@ -1,4 +1,4 @@
-package com.ai.chat.common.mapper;
+package com.ai.chat.mapper;
 
 import com.ai.chat.common.pojo.entity.ChatBatch;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

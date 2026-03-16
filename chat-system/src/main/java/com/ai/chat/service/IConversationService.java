@@ -1,9 +1,9 @@
 package com.ai.chat.service;
 
-import com.ai.chat.common.pojo.entity.Conversation;
-import com.ai.chat.common.pojo.dto.ConversationDTO;
-import com.ai.chat.common.pojo.dto.ConversationUpdateDTO;
-import com.ai.chat.common.pojo.vo.ConversationVo;
+import com.ai.chat.pojo.entity.Conversation;
+import com.ai.chat.pojo.dto.ConversationDTO;
+import com.ai.chat.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.pojo.vo.ConversationVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 

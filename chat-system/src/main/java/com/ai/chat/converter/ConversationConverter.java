@@ -1,8 +1,8 @@
 package com.ai.chat.converter;
 
-import com.ai.chat.common.pojo.entity.Conversation;
-import com.ai.chat.common.pojo.dto.ConversationDTO;
-import com.ai.chat.common.pojo.vo.ConversationVo;
+import com.ai.chat.pojo.entity.Conversation;
+import com.ai.chat.pojo.dto.ConversationDTO;
+import com.ai.chat.pojo.vo.ConversationVo;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;

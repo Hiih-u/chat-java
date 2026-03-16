@@ -1,14 +1,14 @@
 package com.ai.chat.service.impl;
 
-import com.ai.chat.common.pojo.entity.Conversation;
+import com.ai.chat.pojo.entity.Conversation;
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
-import com.ai.chat.common.mapper.ConversationMapper;
+import com.ai.chat.mapper.ConversationMapper;
 import com.ai.chat.common.config.CacheConfig;
 import com.ai.chat.converter.ConversationConverter;
-import com.ai.chat.common.pojo.dto.ConversationDTO;
-import com.ai.chat.common.pojo.dto.ConversationUpdateDTO;
-import com.ai.chat.common.pojo.vo.ConversationVo;
+import com.ai.chat.pojo.dto.ConversationDTO;
+import com.ai.chat.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.pojo.vo.ConversationVo;
 import com.ai.chat.service.IConversationService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
