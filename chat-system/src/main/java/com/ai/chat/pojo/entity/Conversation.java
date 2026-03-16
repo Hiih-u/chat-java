@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @Data
-@TableName(value = "ai_conversations", autoResultMap = true)
+@TableName(value = "ai_conversations")
 public class Conversation {
 
     @TableId(type = IdType.AUTO)

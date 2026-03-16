@@ -1,4 +1,4 @@
-package com.ai.chat.converter;
+package com.ai.chat.wrapper;
 
 import com.ai.chat.pojo.entity.Conversation;
 import com.ai.chat.pojo.dto.ConversationDTO;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Conversation DTO 转换工具类
  */
-public class ConversationConverter {
+public class ConversationWrapper {
 
     /**
      * Entity 转 Response DTO
@@ -33,7 +33,7 @@ public class ConversationConverter {
             return null;
         }
         return entities.stream()
-                .map(ConversationConverter::toResponse)
+                .map(ConversationWrapper::toResponse)
                 .collect(Collectors.toList());
     }
 

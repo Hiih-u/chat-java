@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.chat.mapper.ConversationMapper">
+
+    <resultMap id="ConversationResultMap" type="com.ai.chat.pojo.entity.Conversation">
+        <id column="id" property="id"/>
+        <result column="conversation_id" property="conversationId"/>
+        <result column="title" property="title"/>
+        <result column="session_metadata" property="sessionMetadata" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="deleted" property="deleted"/>
+    </resultMap>
+</mapper>
+

@@ -5,7 +5,7 @@ import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
 import com.ai.chat.mapper.ConversationMapper;
 import com.ai.chat.common.config.CacheConfig;
-import com.ai.chat.converter.ConversationConverter;
+import com.ai.chat.wrapper.ConversationWrapper;
 import com.ai.chat.pojo.dto.ConversationDTO;
 import com.ai.chat.pojo.dto.ConversationUpdateDTO;
 import com.ai.chat.pojo.vo.ConversationVo;
@@ -44,12 +44,12 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
             throw new BusinessException(ResultCode.BAD_REQUEST, "conversationId 已存在");
         }
 
-        Conversation conversation = ConversationConverter.toEntity(dto);
+        Conversation conversation = ConversationWrapper.toEntity(dto);
         boolean saved = this.save(conversation);
         if (!saved) {
             throw new BusinessException(ResultCode.INTERNAL_ERROR, "创建会话失败");
         }
-        return ConversationConverter.toResponse(conversation);
+        return ConversationWrapper.toResponse(conversation);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
         Conversation conversation = this.lambdaQuery()
                 .eq(Conversation::getConversationId, conversationId)
                 .one();
-        return ConversationConverter.toResponse(conversation);
+        return ConversationWrapper.toResponse(conversation);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
         IPage<Conversation> entityPage = this.page(page, wrapper);
         
         // 4. 使用 convert() 方法转换（一行代码搞定！）
-        return entityPage.convert(ConversationConverter::toResponse);
+        return entityPage.convert(ConversationWrapper::toResponse);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
         if (conversation == null) {
             throw new BusinessException(ResultCode.NOT_FOUND, "会话不存在");
         }
-        return ConversationConverter.toResponse(conversation);
+        return ConversationWrapper.toResponse(conversation);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
         if (!updated) {
             throw new BusinessException(ResultCode.INTERNAL_ERROR, "更新会话失败");
         }
-        return ConversationConverter.toResponse(conversation);
+        return ConversationWrapper.toResponse(conversation);
     }
 
     @Override
@@ -168,7 +168,7 @@ public class ConversationServiceImpl extends ServiceImpl<ConversationMapper, Con
     @Cacheable(value = CacheConfig.CONVERSATION_LIST_CACHE, key = "'all'")
     public List<ConversationVo> listAll() {
         List<Conversation> list = this.list();
-        return ConversationConverter.toResponseList(list);
+        return ConversationWrapper.toResponseList(list);
     }
 
 }
