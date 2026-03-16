@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
-    <file url="file://$PROJECT_DIR$/chat-common/src/main/java/com/ai/chat/common/mapper/TaskMapper.java" value="037afa91-d979-428b-b317-0533d86d19da" />
+    <file url="file://$PROJECT_DIR$/chat-system/src/main/java/com/ai/chat/mapper/TaskMapper.java" value="037afa91-d979-428b-b317-0533d86d19da" />
   </component>
 </project>
