@@ -1,28 +1,28 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    # H2 内存数据库配置，启动时加载 schema-test.sql 脚本
+    url: jdbc:h2:mem:chat_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;INIT=RUNSCRIPT FROM 'classpath:schema-test.sql'
     username: sa
     password:
-
-  # H2 控制台配置（可选）
   h2:
     console:
       enabled: true
-      path: /h2-console
+  cache:
+    type: none # 单元测试中关闭 Cache，确保直接走数据库逻辑
 
-# MyBatis Plus 配置
 mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印 SQL 以便调试
   global-config:
     db-config:
+      id-type: auto
       logic-delete-field: deleted
       logic-delete-value: 1
       logic-not-delete-value: 0
 
-# 日志配置
 logging:
   level:
     com.ai.chat: DEBUG
-    org.springframework.test: DEBUG
