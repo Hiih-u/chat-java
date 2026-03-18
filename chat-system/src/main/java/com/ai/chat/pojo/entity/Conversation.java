@@ -26,6 +26,5 @@ public class Conversation {
     private LocalDateTime updatedAt;
 
     @TableLogic
-    @TableField(fill = FieldFill.INSERT)
     private Integer deleted;
 }
