@@ -25,8 +25,11 @@ public class SecurityConfig {
     /**
      * 配置安全过滤链
      */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        System.out.println("当前加载的白名单: " + authProperties.getPermitUrls());
+
         http
                 // 禁用 CSRF（使用 JWT 不需要）
                 .csrf(AbstractHttpConfigurer::disable)

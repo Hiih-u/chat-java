@@ -4,7 +4,15 @@ server:
 spring:
   application:
     name: chat-system
-  # 关键：告诉 Spring Boot 3 从 Nacos 导入哪些 Data ID
+  cloud:
+    nacos:
+      # 必须添加服务器地址，否则会默认连接 localhost
+      server-addr: 192.168.202.155:8848
+      discovery:
+        group: DEFAULT_GROUP
+      config:
+        file-extension: yaml
+        group: DEFAULT_GROUP
   config:
     import:
       - nacos:common-datasource.yaml?group=DEFAULT_GROUP&refresh=true

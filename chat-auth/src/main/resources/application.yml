@@ -3,10 +3,10 @@ server:
 
 spring:
   application:
-    name: chat-auth #
+    name: chat-auth
   cloud:
     nacos:
-      server-addr: 192.168.202.155:8848 #
+      server-addr: 192.168.202.155:8848
       discovery:
         group: DEFAULT_GROUP
       config:
