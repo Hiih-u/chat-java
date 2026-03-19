@@ -86,7 +86,9 @@ public class ConversationController {
      */
     @Operation(summary = "查询所有会话", description = "查询所有会话")
     @GetMapping("/list")
-    public Result<List<ConversationVo>> list() {
+    public Result<List<ConversationVo>> list(
+            @RequestHeader(value = "X-user-Id",required = false) String userId) {
+        log.info("查询会话列表，当前用户: {}", userId);
         List<ConversationVo> list = conversationService.listAll();
         return Result.success(list);
     }
