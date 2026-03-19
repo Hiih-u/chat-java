@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    image: redis:7.2-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - TZ=Asia/Shanghai
+    command: redis-server --appendonly yes
+
+
+  postgres:
+    image: postgres:18
+    container_name: postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_PASSWORD=Hi8899
+      - PGDATA=/var/lib/postgresql/18/docker
+      - LANG=C.UTF-8
+      - POSTGRES_INITDB_ARGS=-c wal_buffers=16MB
+    volumes:
+      - pg_data:/var/lib/postgresql/18/docker
+    restart: unless-stopped
+volumes:
+  uploads_cache:
+  pg_data:
