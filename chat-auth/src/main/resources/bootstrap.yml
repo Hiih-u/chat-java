@@ -15,11 +15,14 @@ spring:
           - data-id: common-datasource.yaml
             group: DEFAULT_GROUP
             refresh: true
+            optional: true   # Nacos 不存在该配置时不报错（开发阶段兜底）
           - data-id: common-redis.yaml
             group: DEFAULT_GROUP
             refresh: true
+            optional: true
         # 本服务专属配置
         extension-configs:
           - data-id: chat-auth.yaml
             group: DEFAULT_GROUP
             refresh: true
+            optional: true

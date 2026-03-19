@@ -15,3 +15,4 @@ spring:
           - data-id: chat-gateway.yaml
             group: DEFAULT_GROUP
             refresh: true
+            optional: true   # Nacos 不存在该配置时不报错（开发阶段兜底）

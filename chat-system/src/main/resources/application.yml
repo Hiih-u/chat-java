@@ -1,6 +1,35 @@
 server:
   port: 8081
 
+# -------------------------------------------------------
+# 本地兜底配置：当 Nacos 上没有对应配置时使用
+# 生产环境这些配置由 Nacos 覆盖，不需要修改此文件
+# -------------------------------------------------------
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.202.155:61020/postgres
+    username: postgres
+    password: Hi8899
+  data:
+    redis:
+      host: 192.168.202.155
+      port: 61300
+      password:
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
+      cache-null-values: false
+
 # MyBatis-Plus 配置（框架级，不需要动态刷新）
 mybatis-plus:
   configuration:
@@ -13,17 +42,3 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
   mapper-locations: classpath*:/mapper/**/*.xml
-
-# Spring Cache 配置
-spring:
-  cache:
-    type: redis
-    redis:
-      time-to-live: 3600000  # 默认缓存过期时间 1小时（毫秒）
-      cache-null-values: false
-
-# -------------------------------------------------------
-# 以下配置已迁移到 Nacos，不再在本地维护：
-#   spring.datasource    -> Nacos: common-datasource.yaml
-#   spring.data.redis    -> Nacos: common-redis.yaml
-# -------------------------------------------------------

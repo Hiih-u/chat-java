@@ -4,15 +4,39 @@ server:
 spring:
   application:
     name: chat-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.202.155:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        # 路由到 chat-auth
+        - id: chat-auth
+          uri: lb://chat-auth
+          predicates:
+            - Path=/auth/**
+        # 路由到 chat-system
+        - id: chat-system
+          uri: lb://chat-system
+          predicates:
+            - Path=/api/**
+
+# -------------------------------------------------------
+# 本地兜底配置：当 Nacos 上没有对应配置时使用
+# -------------------------------------------------------
+jwt:
+  secret: your-256-bit-secret-key-for-jwt-token-generation-please-change-in-production
+
+auth:
+  white-list:
+    - /auth/login
+    - /auth/register
+    - /auth/captcha
 
 logging:
   level:
     com.ai.chat: DEBUG
     org.springframework.cloud.gateway: DEBUG
-
-# -------------------------------------------------------
-# 以下配置已迁移到 Nacos，不再在本地维护：
-#   spring.cloud.gateway.routes  -> Nacos: chat-gateway.yaml
-#   jwt.secret                   -> Nacos: chat-gateway.yaml
-#   auth.white-list              -> Nacos: chat-gateway.yaml
-# -------------------------------------------------------
