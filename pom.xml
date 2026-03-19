@@ -92,6 +92,14 @@
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
+            <!-- Nacos 配置中心 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+            </dependency>
+            <!-- bootstrap 上下文支持，版本由 spring-cloud-dependencies BOM 统一管理 -->
+            <!-- 子模块引用时无需写版本号 -->
         </dependencies>
     </dependencyManagement>
 </project>

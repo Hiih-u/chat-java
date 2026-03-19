@@ -1,39 +1,7 @@
 server:
   port: 8082
 
-spring:
-  application:
-    name: chat-auth
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 192.168.202.155:8848
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.202.155:61020/postgres
-    username: postgres
-    password: Hi8899
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 600000
-      max-lifetime: 1800000
-      connection-timeout: 30000
-  # Redis 配置
-  data:
-    redis:
-      host: 192.168.202.155
-      port: 61300
-      password:
-      database: 0
-      timeout: 3000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-wait: -1ms
-          max-idle: 8
-          min-idle: 0
-
+# MyBatis-Plus 配置（框架级，不需要动态刷新）
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
@@ -45,16 +13,8 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
 
-# JWT 配置
-jwt:
-  secret: your-256-bit-secret-key-for-jwt-token-generation-please-change-in-production
-  access-token-expire: 7200      # 访问令牌过期时间（秒）2小时
-  refresh-token-expire: 604800   # 刷新令牌过期时间（秒）7天
-  issuer: chat-auth
-
-# 认证配置
+# Spring Security 白名单（固定配置，不需要动态刷新）
 auth:
-  # 不需要认证的路径
   permit-urls:
     - /auth/login
     - /auth/register
@@ -62,13 +22,17 @@ auth:
     - /error
     - /actuator/**
 
-# Feign 配置
+# Feign 超时配置
 feign:
   client:
     config:
       default:
         connect-timeout: 5000
         read-timeout: 5000
-  # chat-system 服务地址
-  chat-system:
-    url: http://localhost:8081
+
+# -------------------------------------------------------
+# 以下配置已迁移到 Nacos，不再在本地维护：
+#   spring.datasource      -> Nacos: common-datasource.yaml
+#   spring.data.redis      -> Nacos: common-redis.yaml
+#   jwt.secret / expire    -> Nacos: chat-auth.yaml
+# -------------------------------------------------------

@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: chat-auth
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.202.155:8848
+      config:
+        server-addr: 192.168.202.155:8848
+        file-extension: yaml
+        namespace: ""        # 留空使用 public 命名空间，生产环境填写具体 namespace ID
+        group: DEFAULT_GROUP
+        # 共享配置（多个服务共用）
+        shared-configs:
+          - data-id: common-datasource.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+          - data-id: common-redis.yaml
+            group: DEFAULT_GROUP
+            refresh: true
+        # 本服务专属配置
+        extension-configs:
+          - data-id: chat-auth.yaml
+            group: DEFAULT_GROUP
+            refresh: true
