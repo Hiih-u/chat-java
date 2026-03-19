@@ -1,36 +1,17 @@
 server:
   port: 8081
 
-# -------------------------------------------------------
-# 本地兜底配置：当 Nacos 上没有对应配置时使用
-# 生产环境这些配置由 Nacos 覆盖，不需要修改此文件
-# -------------------------------------------------------
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.202.155:61020/postgres
-    username: postgres
-    password: Hi8899
-  data:
-    redis:
-      host: 192.168.202.155
-      port: 61300
-      password:
-      database: 0
-      timeout: 3000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-wait: -1ms
-          max-idle: 8
-          min-idle: 0
-  cache:
-    type: redis
-    redis:
-      time-to-live: 3600000
-      cache-null-values: false
+  application:
+    name: chat-system
+  # 关键：告诉 Spring Boot 3 从 Nacos 导入哪些 Data ID
+  config:
+    import:
+      - nacos:common-datasource.yaml?group=DEFAULT_GROUP&refresh=true
+      - nacos:common-redis.yaml?group=DEFAULT_GROUP&refresh=true
+      - nacos:chat-system.yaml?group=DEFAULT_GROUP&refresh=true
 
-# MyBatis-Plus 配置（框架级，不需要动态刷新）
+# 以下是本地保持不变的 MyBatis-Plus 配置
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

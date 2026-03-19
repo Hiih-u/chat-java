@@ -1,42 +1,24 @@
 server:
-  port: 8000
+  port: 8000 #
 
 spring:
   application:
-    name: chat-gateway
+    name: chat-gateway #
   cloud:
     nacos:
+      server-addr: 192.168.202.155:8848 #
       discovery:
-        server-addr: 192.168.202.155:8848
-    gateway:
-      discovery:
-        locator:
-          enabled: false
-      routes:
-        # 路由到 chat-auth
-        - id: chat-auth
-          uri: lb://chat-auth
-          predicates:
-            - Path=/auth/**
-        # 路由到 chat-system
-        - id: chat-system
-          uri: lb://chat-system
-          predicates:
-            - Path=/api/**
+        group: DEFAULT_GROUP
+      config:
+        file-extension: yaml
+        group: DEFAULT_GROUP
+  config:
+    import:
+      # 导入网关专属配置（包含路由规则和白名单）
+      - nacos:chat-gateway.yaml?group=DEFAULT_GROUP&refresh=true
 
-# -------------------------------------------------------
-# 本地兜底配置：当 Nacos 上没有对应配置时使用
-# -------------------------------------------------------
-jwt:
-  secret: your-256-bit-secret-key-for-jwt-token-generation-please-change-in-production
-
-auth:
-  white-list:
-    - /auth/login
-    - /auth/register
-    - /auth/captcha
-
+# 本地仅保留基础日志配置
 logging:
   level:
+    org.springframework.cloud.gateway: TRACE
     com.ai.chat: DEBUG
-    org.springframework.cloud.gateway: DEBUG

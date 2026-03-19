@@ -1,44 +1,24 @@
 server:
-  port: 8082
+  port: 8082 #
 
-# -------------------------------------------------------
-# 本地兜底配置：当 Nacos 上没有对应配置时使用
-# 生产环境这些配置由 Nacos 覆盖，不需要修改此文件
-# -------------------------------------------------------
 spring:
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.202.155:61020/postgres
-    username: postgres
-    password: Hi8899
-    hikari:
-      minimum-idle: 5
-      maximum-pool-size: 20
-      idle-timeout: 600000
-      max-lifetime: 1800000
-      connection-timeout: 30000
-  data:
-    redis:
-      host: 192.168.202.155
-      port: 61300
-      password:
-      database: 0
-      timeout: 3000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-wait: -1ms
-          max-idle: 8
-          min-idle: 0
+  application:
+    name: chat-auth #
+  cloud:
+    nacos:
+      server-addr: 192.168.202.155:8848 #
+      discovery:
+        group: DEFAULT_GROUP
+      config:
+        file-extension: yaml
+        group: DEFAULT_GROUP
+  config:
+    import:
+      - nacos:common-datasource.yaml?group=DEFAULT_GROUP&refresh=true
+      - nacos:common-redis.yaml?group=DEFAULT_GROUP&refresh=true
+      - nacos:chat-auth.yaml?group=DEFAULT_GROUP&refresh=true
 
-# JWT 本地兜底配置
-jwt:
-  secret: your-256-bit-secret-key-for-jwt-token-generation-please-change-in-production
-  access-token-expire: 7200
-  refresh-token-expire: 604800
-  issuer: chat-auth
-
-# MyBatis-Plus 配置（框架级，不需要动态刷新）
+# 本地保留 MyBatis-Plus 基础配置
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
@@ -46,23 +26,3 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
-      logic-delete-field: deleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-
-# Spring Security 白名单（固定配置）
-auth:
-  permit-urls:
-    - /auth/login
-    - /auth/register
-    - /auth/captcha
-    - /error
-    - /actuator/**
-
-# Feign 超时配置
-feign:
-  client:
-    config:
-      default:
-        connect-timeout: 5000
-        read-timeout: 5000
