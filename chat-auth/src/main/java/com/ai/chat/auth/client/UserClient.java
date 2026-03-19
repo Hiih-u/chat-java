@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @FeignClient(
         name = "chat-system",
-        url = "${feign.chat-system.url}",
         fallback = UserClientFallback.class
 )
 public interface UserClient {
