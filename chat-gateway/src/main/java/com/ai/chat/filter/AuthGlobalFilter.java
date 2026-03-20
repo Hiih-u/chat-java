@@ -5,8 +5,10 @@ import com.ai.chat.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -20,11 +22,11 @@ import java.security.Key;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
-    private final AuthProperties authProperties;
-    private final JwtProperties jwtProperties;
+    private AuthProperties authProperties;
+    private JwtProperties jwtProperties;
 
 
     @Override
