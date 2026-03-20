@@ -116,20 +116,6 @@ auth:
     - /auth/login
     - /auth/register
     - /auth/captcha
-    - /gateway/config   # Nacos 动态刷新测试接口（无需 Token）
-
-# =====================================================
-# Nacos Config 动态刷新测试配置（app.config.*）
-# 修改以下任意字段后点击「发布」，无需重启即可热更新。
-# 通过 GET /gateway/config/current 或 /gateway/config/test-props 验证。
-# =====================================================
-app:
-  config:
-    test-value: "hello-from-nacos"       # 随意修改此值来验证热更新
-    description: "Nacos Config 动态刷新测试"
-    feature-enabled: false               # 功能开关，修改为 true 观察变化
-    rate-limit: 100                      # 限流阈值示例
-
 spring:
   cloud:
     nacos:
@@ -148,6 +134,33 @@ spring:
           uri: lb://chat-system
           predicates:
             - Path=/api/**
+            
+app:
+  config:
+    test-value: "hello-from-nacos2"
+    description: "Nacos Config 动态刷新测试"
+    feature-enabled: true
+    rate-limit: 100    
+
+
+# Actuator 暴露 refresh 端点（可手动触发刷新，也可用于验证）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,env
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    com.ai.chat: DEUG
+    # 开启 Nacos 配置刷新的 DEBUG 日志，方便排查热更新是否触发
+    com.alibaba.cloud.nacos.refresh: DEBUG
+    org.springframework.cloud.context.refresh: DEBUG
+
 ```
 
 ---
