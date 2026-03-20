@@ -1,5 +1,5 @@
 server:
-  port: 8000 #
+  port: 8000
 
 spring:
   application:
@@ -12,13 +12,28 @@ spring:
       config:
         file-extension: yaml
         group: DEFAULT_GROUP
+    # 显式开启配置刷新（Spring Cloud 2023.x 默认已开启，此处明确声明防止被覆盖）
+    refresh:
+      enabled: true
   config:
     import:
-      # 导入网关专属配置（包含路由规则和白名单）
+      # refresh=true：告知 Nacos 客户端监听此 Data ID 的变更并推送 RefreshEvent
       - nacos:chat-gateway.yaml?group=DEFAULT_GROUP&refresh=true
 
-# 本地仅保留基础日志配置
+# Actuator 暴露 refresh 端点（可手动触发刷新，也可用于验证）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,env
+  endpoint:
+    health:
+      show-details: always
+
 logging:
   level:
     org.springframework.cloud.gateway: TRACE
     com.ai.chat: DEBUG
+    # 开启 Nacos 配置刷新的 DEBUG 日志，方便排查热更新是否触发
+    com.alibaba.cloud.nacos.refresh: DEBUG
+    org.springframework.cloud.context.refresh: DEBUG

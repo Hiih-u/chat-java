@@ -61,10 +61,17 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        <!-- bootstrap 上下文支持 -->
+        <!--
+            注意：spring-cloud-starter-bootstrap 已移除。
+            项目使用 spring.config.import（新方式）加载 Nacos 配置，
+            不应同时引入 bootstrap 上下文，否则两套刷新监听器互相干扰，
+            导致 @RefreshScope 热更新失效。
+        -->
+
+        <!-- Actuator：Nacos RefreshEvent 触发链路必须 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 </project>

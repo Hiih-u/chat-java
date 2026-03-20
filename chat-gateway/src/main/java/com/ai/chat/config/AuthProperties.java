@@ -3,14 +3,19 @@ package com.ai.chat.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * 网关白名单配置
+ * <p>
+ * 不加 @Component，由 @EnableConfigurationProperties 在 GatewayApplication 上注册。
+ * 这样 @RefreshScope 能正确包裹唯一的绑定实例，保证 Nacos 修改白名单后热更新生效。
+ * </p>
+ */
 @Data
-@Component
 @RefreshScope
-@ConfigurationProperties(prefix = "auth") // 读取配置文件中以 auth 为前缀的配置项，自动映射到类的字段上。
+@ConfigurationProperties(prefix = "auth")
 public class AuthProperties {
     private List<String> whiteList;
 }
