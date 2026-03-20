@@ -5,11 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ai.chat</groupId>
-        <artifactId>chat-service</artifactId>
+        <artifactId>chat-java</artifactId>
         <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>chat-service</artifactId>
+
+    <packaging>pom</packaging>
 
     <modules>
         <module>chat-system</module>
