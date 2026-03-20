@@ -17,12 +17,8 @@ spring:
       - nacos:common-datasource.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:common-redis.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:chat-auth.yaml?group=DEFAULT_GROUP&refresh=true
+      - nacos:common-actuator.yaml?group=DEFAULT_GROUP&refresh=true
 
-# 本地保留 MyBatis-Plus 基础配置
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       id-type: auto

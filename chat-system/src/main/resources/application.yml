@@ -18,16 +18,7 @@ spring:
       - nacos:common-datasource.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:common-redis.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:chat-system.yaml?group=DEFAULT_GROUP&refresh=true
+      - nacos:common-actuator.yaml?group=DEFAULT_GROUP&refresh=true
 
-# 以下是本地保持不变的 MyBatis-Plus 配置
 mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    db-config:
-      id-type: auto
-      logic-delete-field: deleted
-      logic-delete-value: 1
-      logic-not-delete-value: 0
   mapper-locations: classpath*:/mapper/**/*.xml
