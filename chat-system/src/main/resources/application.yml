@@ -19,6 +19,3 @@ spring:
       - nacos:common-redis.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:chat-system.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:common-actuator.yaml?group=DEFAULT_GROUP&refresh=true
-
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**/*.xml
