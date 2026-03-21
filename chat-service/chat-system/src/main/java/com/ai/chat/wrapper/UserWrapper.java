@@ -1,8 +1,8 @@
 package com.ai.chat.wrapper;
 
-import com.ai.chat.pojo.dto.UserCreateDTO;
-import com.ai.chat.pojo.entity.User;
-import com.ai.chat.pojo.vo.UserVo;
+import com.ai.chat.system.pojo.dto.UserCreateDTO;
+import com.ai.chat.system.pojo.entity.User;
+import com.ai.chat.system.pojo.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Collections;

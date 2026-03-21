@@ -2,10 +2,9 @@ package com.ai.chat.service;
 
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
-import com.ai.chat.pojo.dto.ConversationDTO;
-import com.ai.chat.pojo.dto.ConversationUpdateDTO;
-import com.ai.chat.pojo.entity.Conversation;
-import com.ai.chat.pojo.vo.ConversationVo;
+import com.ai.chat.system.pojo.dto.ConversationDTO;
+import com.ai.chat.system.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.system.pojo.vo.ConversationVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,10 +16,6 @@ import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

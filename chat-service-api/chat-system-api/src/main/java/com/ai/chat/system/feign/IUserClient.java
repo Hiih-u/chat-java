@@ -2,7 +2,7 @@ package com.ai.chat.system.feign;
 
 import com.ai.chat.common.pojo.entity.Result;
 import com.ai.chat.system.entity.UserInfo;
-import com.ai.chat.system.fallback.IUserClientFallbackFactory;
+import com.ai.chat.system.pojo.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +35,7 @@ public interface IUserClient {
      * @return 用户信息
      */
     @GetMapping(API_PREFIX + "/username/{username}")
-    Result<UserInfo> getUserByUsername(@PathVariable("username") String username);
+    Result<User> getUserByUsername(@PathVariable("username") String username);
 
     /**
      * 根据用户ID获取用户信息（含密码，仅供内部认证使用）
@@ -44,5 +44,5 @@ public interface IUserClient {
      * @return 用户信息
      */
     @GetMapping(API_PREFIX + "/{userId}")
-    Result<UserInfo> getUserById(@PathVariable("userId") Long userId);
+    Result<User> getUserById(@PathVariable("userId") Long userId);
 }

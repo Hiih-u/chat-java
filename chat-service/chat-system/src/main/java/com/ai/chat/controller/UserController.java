@@ -1,9 +1,9 @@
 package com.ai.chat.controller;
 
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.pojo.dto.UserCreateDTO;
-import com.ai.chat.pojo.dto.UserUpdateDTO;
-import com.ai.chat.pojo.vo.UserVo;
+import com.ai.chat.system.pojo.dto.UserCreateDTO;
+import com.ai.chat.system.pojo.dto.UserUpdateDTO;
+import com.ai.chat.system.pojo.vo.UserVo;
 import com.ai.chat.service.IUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;

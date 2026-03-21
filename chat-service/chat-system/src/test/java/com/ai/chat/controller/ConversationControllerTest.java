@@ -1,9 +1,8 @@
 package com.ai.chat.controller;
 
-import com.ai.chat.controller.ConversationController;
-import com.ai.chat.pojo.dto.ConversationDTO;
-import com.ai.chat.pojo.dto.ConversationUpdateDTO;
-import com.ai.chat.pojo.vo.ConversationVo;
+import com.ai.chat.system.pojo.dto.ConversationDTO;
+import com.ai.chat.system.pojo.dto.ConversationUpdateDTO;
+import com.ai.chat.system.pojo.vo.ConversationVo;
 import com.ai.chat.service.IConversationService;
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.exception.BusinessException;
@@ -20,7 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.hamcrest.Matchers.containsString;

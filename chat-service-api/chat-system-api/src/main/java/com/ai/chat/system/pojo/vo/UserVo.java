@@ -1,4 +1,4 @@
-package com.ai.chat.pojo.vo;
+package com.ai.chat.system.pojo.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

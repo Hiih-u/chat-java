@@ -1,4 +1,4 @@
-package com.ai.chat.pojo.dto;
+package com.ai.chat.system.pojo.dto;
 
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 package com.ai.chat.wrapper;
 
-import com.ai.chat.pojo.entity.Conversation;
-import com.ai.chat.pojo.dto.ConversationDTO;
-import com.ai.chat.pojo.vo.ConversationVo;
+import com.ai.chat.system.pojo.entity.Conversation;
+import com.ai.chat.system.pojo.dto.ConversationDTO;
+import com.ai.chat.system.pojo.vo.ConversationVo;
 import org.springframework.beans.BeanUtils;
 
 import java.util.List;

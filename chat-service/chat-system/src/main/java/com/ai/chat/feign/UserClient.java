@@ -1,7 +1,7 @@
 package com.ai.chat.feign;
 
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.pojo.entity.User;
+import com.ai.chat.system.pojo.entity.User;
 import com.ai.chat.service.IUserService;
 import com.ai.chat.system.feign.IUserClient;
 import com.ai.chat.system.entity.UserInfo;

@@ -1,9 +1,8 @@
-package com.ai.chat.system.fallback;
+package com.ai.chat.system.feign;
 
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.system.feign.IUserClient;
-import com.ai.chat.system.entity.UserInfo;
+import com.ai.chat.system.pojo.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
@@ -22,14 +21,14 @@ public class IUserClientFallbackFactory implements FallbackFactory<IUserClient> 
     public IUserClient create(Throwable cause) {
         return new IUserClient() {
             @Override
-            public Result<UserInfo> getUserByUsername(String username) {
+            public Result<User> getUserByUsername(String username) {
                 log.error("[IUserClient] getUserByUsername 调用失败, username={}, cause: {}",
                         username, cause.getMessage());
                 return Result.error(ResultCode.SERVICE_ERROR.getCode(), "用户服务暂不可用");
             }
 
             @Override
-            public Result<UserInfo> getUserById(Long userId) {
+            public Result<User> getUserById(Long userId) {
                 log.error("[IUserClient] getUserById 调用失败, userId={}, cause: {}",
                         userId, cause.getMessage());
                 return Result.error(ResultCode.SERVICE_ERROR.getCode(), "用户服务暂不可用");
