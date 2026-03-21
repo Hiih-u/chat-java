@@ -1,7 +1,6 @@
 package com.ai.chat.system.feign;
 
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.system.entity.UserInfo;
 import com.ai.chat.system.pojo.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

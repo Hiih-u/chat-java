@@ -4,7 +4,6 @@ import com.ai.chat.common.pojo.entity.Result;
 import com.ai.chat.system.pojo.entity.User;
 import com.ai.chat.service.IUserService;
 import com.ai.chat.system.feign.IUserClient;
-import com.ai.chat.system.entity.UserInfo;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -38,7 +37,7 @@ public class UserClient implements IUserClient {
     @Operation(summary = "[内部] 根据用户名查询用户", description = "含密码字段，仅供 chat-auth 调用")
     @Override
     @GetMapping("/username/{username}")
-    public Result<UserInfo> getUserByUsername(
+    public Result<User> getUserByUsername(
             @Parameter(description = "用户名", required = true)
             @PathVariable("username") String username) {
         log.info("[内部接口] 根据用户名查询用户: {}", username);
@@ -59,7 +58,7 @@ public class UserClient implements IUserClient {
     @Operation(summary = "[内部] 根据用户ID查询用户", description = "含密码字段，仅供 chat-auth 调用")
     @Override
     @GetMapping("/{userId}")
-    public Result<UserInfo> getUserById(
+    public Result<User> getUserById(
             @Parameter(description = "用户ID", required = true)
             @PathVariable("userId") Long userId) {
         log.info("[内部接口] 根据用户ID查询用户: {}", userId);
@@ -73,8 +72,8 @@ public class UserClient implements IUserClient {
     /**
      * 将 User 实体转换为 UserInfo（含密码，内部专用）
      */
-    private UserInfo toUserInfo(User user) {
-        UserInfo info = new UserInfo();
+    private User toUserInfo(User user) {
+        User info = new User();
         info.setId(user.getId());
         info.setUsername(user.getUsername());
         info.setPassword(user.getPassword());

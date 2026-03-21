@@ -3,7 +3,6 @@ package com.ai.chat.auth.service.impl;
 import com.ai.chat.auth.config.JwtProperties;
 import com.ai.chat.auth.pojo.dto.LoginRequest;
 import com.ai.chat.system.feign.IUserClient;
-import com.ai.chat.system.entity.UserInfo;
 import com.ai.chat.auth.pojo.entity.UserToken;
 import com.ai.chat.auth.pojo.vo.LoginResponse;
 import com.ai.chat.auth.service.AuthService;
@@ -12,6 +11,7 @@ import com.ai.chat.auth.util.JwtUtil;
 import com.ai.chat.auth.util.WebUtil;
 import com.ai.chat.common.exception.BusinessException;
 import com.ai.chat.common.pojo.entity.Result;
+import com.ai.chat.system.pojo.entity.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +35,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public LoginResponse login(LoginRequest request, HttpServletRequest httpRequest) {
-        Result<UserInfo> userResult = userClient.getUserByUsername(request.getUsername());
+        Result<User> userResult = userClient.getUserByUsername(request.getUsername());
         if (userResult.getCode() != 200 || userResult.getData() == null) {
             throw new BusinessException("用户名或密码错误");
         }
-        UserInfo userInfo = userResult.getData();
+        User userInfo = userResult.getData();
 
         // 验证用户状态
         if (userInfo.getStatus() == null || userInfo.getStatus() != 1) {
@@ -116,12 +116,12 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // 验证用户是否存在且状态正常
-        Result<UserInfo> userResult = userClient.getUserById(userId);
+        Result<User> userResult = userClient.getUserById(userId);
         if (userResult.getCode() != 200 || userResult.getData() == null) {
             throw new BusinessException("用户不存在");
         }
 
-        UserInfo userInfo = userResult.getData();
+        User userInfo = userResult.getData();
         if (userInfo.getStatus() == null || userInfo.getStatus() != 1) {
             throw new BusinessException("用户已被禁用");
         }
