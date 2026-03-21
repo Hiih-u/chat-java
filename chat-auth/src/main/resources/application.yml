@@ -19,6 +19,3 @@ spring:
       - nacos:chat-auth.yaml?group=DEFAULT_GROUP&refresh=true
       - nacos:common-actuator.yaml?group=DEFAULT_GROUP&refresh=true
 
-  global-config:
-    db-config:
-      id-type: auto
