@@ -1,4 +1,4 @@
-package com.ai.chat.controller;
+package com.ai.chat.feign;
 
 import com.ai.chat.common.pojo.entity.Result;
 import com.ai.chat.pojo.entity.User;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(IUserClient.API_PREFIX)
 @RequiredArgsConstructor
-public class UserInternalController implements IUserClient {
+public class UserClient implements IUserClient {
 
     private final IUserService userService;
 
