@@ -1,9 +1,9 @@
 package com.ai.chat.auth.service.impl;
 
-import com.ai.chat.auth.client.UserClient;
 import com.ai.chat.auth.config.JwtProperties;
 import com.ai.chat.auth.pojo.dto.LoginRequest;
-import com.ai.chat.auth.pojo.dto.UserInfo;
+import com.ai.chat.system.api.IUserClient;
+import com.ai.chat.system.entity.UserInfo;
 import com.ai.chat.auth.pojo.entity.UserToken;
 import com.ai.chat.auth.pojo.vo.LoginResponse;
 import com.ai.chat.auth.service.AuthService;
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final UserClient userClient;
+    private final IUserClient userClient;
     private final JwtUtil jwtUtil;
     private final JwtProperties jwtProperties;
     private final TokenService tokenService;

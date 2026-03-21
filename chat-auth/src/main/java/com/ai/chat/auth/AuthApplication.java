@@ -11,10 +11,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication(scanBasePackages = {
         "com.ai.chat.auth",
-        "com.ai.chat.common"
+        "com.ai.chat.common",
+        "com.ai.chat.system.fallback"   // 扫描 chat-system-api 中的 FallbackFactory @Component
 })
 @MapperScan("com.ai.chat.auth.mapper")
-@EnableFeignClients(basePackages = "com.ai.chat.auth.client")
+@EnableFeignClients(basePackages = {
+        "com.ai.chat.system.api"        // 扫描 chat-system-api 中的 IUserClient Feign 接口
+})
 @EnableDiscoveryClient
 public class AuthApplication {
 

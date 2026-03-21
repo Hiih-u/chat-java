@@ -105,5 +105,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
+
+        <!-- chat-system-api：实现 IUserClient 接口契约 -->
+        <dependency>
+            <groupId>com.ai.chat</groupId>
+            <artifactId>chat-system-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>
