@@ -2,8 +2,8 @@ package com.ai.chat.auth.service.impl;
 
 import com.ai.chat.auth.config.JwtProperties;
 import com.ai.chat.auth.pojo.dto.LoginRequest;
-import com.ai.chat.system.api.feign.IUserClient;
-import com.ai.chat.system.api.entity.UserInfo;
+import com.ai.chat.system.feign.IUserClient;
+import com.ai.chat.system.entity.UserInfo;
 import com.ai.chat.auth.pojo.entity.UserToken;
 import com.ai.chat.auth.pojo.vo.LoginResponse;
 import com.ai.chat.auth.service.AuthService;

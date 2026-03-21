@@ -1,4 +1,4 @@
-package com.ai.chat.system.api.entity;
+package com.ai.chat.system.entity;
 
 import lombok.Data;
 

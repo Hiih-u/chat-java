@@ -1,9 +1,9 @@
-package com.ai.chat.system.api.fallback;
+package com.ai.chat.system.fallback;
 
 import com.ai.chat.common.enums.ResultCode;
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.system.api.feign.IUserClient;
-import com.ai.chat.system.api.entity.UserInfo;
+import com.ai.chat.system.feign.IUserClient;
+import com.ai.chat.system.entity.UserInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
