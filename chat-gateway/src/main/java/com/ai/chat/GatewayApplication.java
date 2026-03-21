@@ -2,7 +2,6 @@ package com.ai.chat;
 
 import com.ai.chat.config.AuthProperties;
 import com.ai.chat.config.JwtProperties;
-import com.ai.chat.config.NacosConfigTestProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -20,8 +19,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @EnableConfigurationProperties({
         JwtProperties.class,
-        AuthProperties.class,
-        NacosConfigTestProperties.class
+        AuthProperties.class
 })
 public class GatewayApplication {
     public static void main(String[] args) {
