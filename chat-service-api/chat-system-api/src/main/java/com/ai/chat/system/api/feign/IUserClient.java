@@ -1,8 +1,8 @@
-package com.ai.chat.system.api;
+package com.ai.chat.system.api.feign;
 
 import com.ai.chat.common.pojo.entity.Result;
-import com.ai.chat.system.entity.UserInfo;
-import com.ai.chat.system.fallback.IUserClientFallbackFactory;
+import com.ai.chat.system.api.entity.UserInfo;
+import com.ai.chat.system.api.fallback.IUserClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
