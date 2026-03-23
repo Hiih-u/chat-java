@@ -6,7 +6,7 @@ spring:
     name: chat-gateway
   cloud:
     nacos:
-      server-addr: 192.168.202.155:8848
+      server-addr: 10.202.108.50:8848
       discovery:
         group: DEFAULT_GROUP
       config:
